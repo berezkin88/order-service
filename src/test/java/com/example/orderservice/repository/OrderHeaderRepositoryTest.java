@@ -28,6 +28,9 @@ class OrderHeaderRepositoryTest {
         var allOrders = orderHeaderRepository.findAll();
 
         assertThat(allOrders)
-            .hasSize(1);
+            .hasSize(1)
+            .element(0)
+            .extracting(OrderHeader::getCreatedDate)
+            .isNotNull();
     }
 }
