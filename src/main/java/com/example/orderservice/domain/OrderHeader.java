@@ -6,28 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class OrderHeader {
+public class OrderHeader extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String customerName;
-
-    public OrderHeader() {
-    }
-
-    public OrderHeader(Long id, String customerName) {
-        this.id = id;
-        this.customerName = customerName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getCustomerName() {
         return customerName;
@@ -41,14 +22,17 @@ public class OrderHeader {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
 
         OrderHeader that = (OrderHeader) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return customerName != null ? customerName.equals(that.customerName) : that.customerName == null;
     }
 
     @Override
     public int hashCode() {
-        return id != null ? id.hashCode() : 0;
+        int result = super.hashCode();
+        result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
+        return result;
     }
 }
