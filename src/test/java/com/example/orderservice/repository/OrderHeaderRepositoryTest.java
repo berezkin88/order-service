@@ -30,7 +30,7 @@ class OrderHeaderRepositoryTest {
         assertThat(allOrders)
             .hasSize(1)
             .element(0)
-            .extracting(OrderHeader::getCreatedDate)
-            .isNotNull();
+            .matches(el -> el.getCreatedDate() != null)
+            .matches(el -> el.getLastModifiedDate() != null);
     }
 }
