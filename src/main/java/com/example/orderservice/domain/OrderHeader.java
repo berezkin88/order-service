@@ -1,9 +1,6 @@
 package com.example.orderservice.domain;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 @AttributeOverride(
@@ -45,6 +42,8 @@ public class OrderHeader extends BaseEntity {
     private Address shippingAddress;
     @Embedded
     private Address billToAddress;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
 
     public String getCustomerName() {
         return customerName;
@@ -70,6 +69,14 @@ public class OrderHeader extends BaseEntity {
         this.billToAddress = billToAddress;
     }
 
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,7 +88,9 @@ public class OrderHeader extends BaseEntity {
         if (customerName != null ? !customerName.equals(that.customerName) : that.customerName != null) return false;
         if (shippingAddress != null ? !shippingAddress.equals(that.shippingAddress) : that.shippingAddress != null)
             return false;
-        return billToAddress != null ? billToAddress.equals(that.billToAddress) : that.billToAddress == null;
+        if (billToAddress != null ? !billToAddress.equals(that.billToAddress) : that.billToAddress != null)
+            return false;
+        return orderStatus == that.orderStatus;
     }
 
     @Override
@@ -90,6 +99,7 @@ public class OrderHeader extends BaseEntity {
         result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
         result = 31 * result + (shippingAddress != null ? shippingAddress.hashCode() : 0);
         result = 31 * result + (billToAddress != null ? billToAddress.hashCode() : 0);
+        result = 31 * result + (orderStatus != null ? orderStatus.hashCode() : 0);
         return result;
     }
 }
